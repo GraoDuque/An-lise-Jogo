@@ -1,0 +1,80 @@
+<!doctype html><html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101820"><title>Análise de Jogo v2</title><style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;background:#eef1f5;color:#15202b;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#101820;color:#fff;padding:14px 12px;text-align:center}h1{font-size:20px;margin:0}.sub{font-size:12px;opacity:.7;margin:2px 0 6px}#clock{font-size:40px;font-weight:900;font-variant-numeric:tabular-nums}.period{font-size:14px;font-weight:900;margin:4px 0}.status{font-size:13px;min-height:18px}.top{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}button{border:0;border-radius:12px;font-weight:800;min-height:44px;font-size:14px;touch-action:manipulation}.home{background:#159957;color:#fff}.away{background:#d64545;color:#fff}.neutral{background:#e5e9ee;color:#17202a}main{max-width:900px;margin:auto;padding:12px}.card{background:#fff;border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:0 2px 10px #0001}.score{display:grid;grid-template-columns:1fr 72px 1fr;align-items:center;gap:8px;text-align:center}.scoreTeam{font-weight:900}.goals{font-size:30px;font-weight:900}.goalBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.possession{display:grid;grid-template-columns:1fr 1fr;gap:8px}.posbox{text-align:center;background:#f5f7f9;border-radius:12px;padding:9px}.pct{font-size:27px;font-weight:900}.time{font-size:12px;color:#687585}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.title{text-align:center;font-size:16px;font-weight:900;margin-bottom:7px}.stat{display:grid;grid-template-columns:1fr 52px;align-items:center;border-top:1px solid #edf0f2;padding:7px 0}.stat:first-child{border-top:0}.name{font-size:13px}.plus{font-size:20px;background:#e9eef3}.count{text-align:center;grid-column:2;font-size:11px;color:#697586}.breakdown{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:12px;text-align:center}.breakdown div{background:#f5f7f9;padding:8px;border-radius:10px}.report{font-size:13px;line-height:1.7}@media(max-width:430px){.name{font-size:12px}.title{font-size:15px}}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:99;align-items:center;justify-content:center;padding:15px}.modal.show{display:flex}.modalbox{background:#fff;border-radius:18px;padding:18px;max-width:700px;width:100%;max-height:90vh;overflow:auto}.modalactions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.modalactions button{background:#e5e9ee;color:#17202a}.modalactions .ok{background:#159957;color:#fff}
+</style></head><body><header><h1>⚽ ANÁLISE DE JOGO</h1><div class="sub">Versão 2 • 1.ª / 2.ª parte</div><div id="clock">00:00</div><div id="period" class="period">1.ª PARTE</div><div id="status">Cronómetro parado</div><div class="top"><button id="homePoss" class="home">🟢 NOSSA POSSE</button><button id="awayPoss" class="away">🔴 ADVERSÁRIO</button><button id="start" class="neutral">▶️ Iniciar / Parar</button><button id="periodBtn" class="neutral">⏭️ 2.ª PARTE</button><button id="newGameBtn" class="neutral">🆕 NOVO JOGO</button><button id="undoBtn" class="neutral">↩️ DESFAZER ÚLTIMA AÇÃO</button></div></header><main><section class="card"><div class="score"><div class="scoreTeam">🔵 Nossa equipa</div><div class="goals"><span id="homeGoals">0</span> - <span id="awayGoals">0</span></div><div class="scoreTeam">🔴 Adversário</div></div><div class="goalBtns"><button id="homeGoal" class="home">⚽ Golo Nossa Equipa</button><button id="awayGoal" class="away">⚽ Golo Adversário</button></div></section><section class="card"><div class="possession"><div class="posbox"><div>Nossa equipa</div><div id="homePct" class="pct">50.0%</div><div id="homeTime" class="time">00:00</div></div><div class="posbox"><div>Adversário</div><div id="awayPct" class="pct">50.0%</div><div id="awayTime" class="time">00:00</div></div></div></section><section class="card"><div class="title">📊 POSSE POR PERÍODO</div><div class="breakdown"><div><b>1.ª PARTE</b><br><span id="p1home">50.0%</span> / <span id="p1away">50.0%</span></div><div><b>2.ª PARTE</b><br><span id="p2home">—</span> / <span id="p2away">—</span></div><div><b>TOTAL</b><br><span id="totalhome">50.0%</span> / <span id="totalaway">50.0%</span></div></div></section><section class="card">
+<div class="title">📊 EVENTOS ESTATÍSTICOS</div>
+<div class="stats">
+<div><div class="title">🔵 NOSSA EQUIPA</div><div class="stat"><div class="name">🎯 Finalizações na baliza</div><button class="plus statBtn" type="button" data-team="home" data-stat="shotsOn">+</button><div class="count" data-team="home" data-stat="shotsOn">0</div></div>
+<div class="stat"><div class="name">❌ Finalizações fora da baliza</div><button class="plus statBtn" type="button" data-team="home" data-stat="shotsOff">+</button><div class="count" data-team="home" data-stat="shotsOff">0</div></div>
+<div class="stat"><div class="name">🚩 Cantos</div><button class="plus statBtn" type="button" data-team="home" data-stat="corners">+</button><div class="count" data-team="home" data-stat="corners">0</div></div>
+<div class="stat"><div class="name">⚠️ Faltas cometidas</div><button class="plus statBtn" type="button" data-team="home" data-stat="fouls">+</button><div class="count" data-team="home" data-stat="fouls">0</div></div>
+<div class="stat"><div class="name">🥅 Pontapés de baliza</div><button class="plus statBtn" type="button" data-team="home" data-stat="goalKicks">+</button><div class="count" data-team="home" data-stat="goalKicks">0</div></div>
+<div class="stat"><div class="name">↗️ Cruzamentos</div><button class="plus statBtn" type="button" data-team="home" data-stat="crosses">+</button><div class="count" data-team="home" data-stat="crosses">0</div></div>
+<div class="stat"><div class="name">🚩 Foras de jogo</div><button class="plus statBtn" type="button" data-team="home" data-stat="offsides">+</button><div class="count" data-team="home" data-stat="offsides">0</div></div>
+<div class="stat"><div class="name">🟨 Cartões amarelos</div><button class="plus statBtn" type="button" data-team="home" data-stat="yellow">+</button><div class="count" data-team="home" data-stat="yellow">0</div></div>
+<div class="stat"><div class="name">🟥 Cartões vermelhos</div><button class="plus statBtn" type="button" data-team="home" data-stat="red">+</button><div class="count" data-team="home" data-stat="red">0</div></div></div>
+<div><div class="title">🔴 ADVERSÁRIO</div><div class="stat"><div class="name">🎯 Finalizações na baliza</div><button class="plus statBtn" type="button" data-team="away" data-stat="shotsOn">+</button><div class="count" data-team="away" data-stat="shotsOn">0</div></div>
+<div class="stat"><div class="name">❌ Finalizações fora da baliza</div><button class="plus statBtn" type="button" data-team="away" data-stat="shotsOff">+</button><div class="count" data-team="away" data-stat="shotsOff">0</div></div>
+<div class="stat"><div class="name">🚩 Cantos</div><button class="plus statBtn" type="button" data-team="away" data-stat="corners">+</button><div class="count" data-team="away" data-stat="corners">0</div></div>
+<div class="stat"><div class="name">⚠️ Faltas cometidas</div><button class="plus statBtn" type="button" data-team="away" data-stat="fouls">+</button><div class="count" data-team="away" data-stat="fouls">0</div></div>
+<div class="stat"><div class="name">🥅 Pontapés de baliza</div><button class="plus statBtn" type="button" data-team="away" data-stat="goalKicks">+</button><div class="count" data-team="away" data-stat="goalKicks">0</div></div>
+<div class="stat"><div class="name">↗️ Cruzamentos</div><button class="plus statBtn" type="button" data-team="away" data-stat="crosses">+</button><div class="count" data-team="away" data-stat="crosses">0</div></div>
+<div class="stat"><div class="name">🚩 Foras de jogo</div><button class="plus statBtn" type="button" data-team="away" data-stat="offsides">+</button><div class="count" data-team="away" data-stat="offsides">0</div></div>
+<div class="stat"><div class="name">🟨 Cartões amarelos</div><button class="plus statBtn" type="button" data-team="away" data-stat="yellow">+</button><div class="count" data-team="away" data-stat="yellow">0</div></div>
+<div class="stat"><div class="name">🟥 Cartões vermelhos</div><button class="plus statBtn" type="button" data-team="away" data-stat="red">+</button><div class="count" data-team="away" data-stat="red">0</div></div></div>
+</div>
+</section><section class="card"><div class="title">📋 RESUMO</div><div id="report" class="report"></div>
+<button id="reportBtn" class="neutral" style="width:100%;margin-top:10px">📋 RELATÓRIO FINAL</button></section></main><div id="modal" class="modal"><div class="modalbox"><h2>📋 Relatório do jogo</h2><div id="fullReport" class="report"></div><div class="modalactions"><button id="copyReport" class="ok">📋 Copiar</button><button id="closeReport">Fechar</button></div></div></div><script>
+(function(){
+"use strict";
+const labels=["🎯 Finalizações na baliza","❌ Finalizações fora da baliza","🚩 Cantos","⚠️ Faltas cometidas","🥅 Pontapés de baliza","↗️ Cruzamentos","🚩 Foras de jogo","🟨 Cartões amarelos","🟥 Cartões vermelhos"];
+const keys=["shotsOn","shotsOff","corners","fouls","goalKicks","crosses","offsides","yellow","red"];
+const $=id=>document.getElementById(id);
+let running=false,active=null,lastMs=null,game=0,period=1;
+let goals={home:0,away:0};
+let possTotal={home:0,away:0};
+let possParts=[{home:0,away:0},{home:0,away:0}];
+let count={home:{},away:{}}; let history=[];
+keys.forEach(k=>{count.home[k]=0;count.away[k]=0});
+function fmt(x){x=Math.max(0,Math.floor(x));return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0")}
+function percent(a,b){let t=a+b;return t?(a/t*100).toFixed(1)+"%":"50.0%"}
+function snapshot(){return JSON.parse(JSON.stringify({game,period,goals,possTotal,possParts,count,active,running}))}
+function saveHistory(){history.push(snapshot());if(history.length>100)history.shift()}
+function renderCounts(){document.querySelectorAll('.count[data-team][data-stat]').forEach(el=>el.textContent=count[el.dataset.team][el.dataset.stat]||0)}
+function update(){
+ $("clock").textContent=fmt(game);$("period").textContent=period===1?"1.ª PARTE":"2.ª PARTE";
+ $("homeGoals").textContent=goals.home;$("awayGoals").textContent=goals.away;
+ $("homePct").textContent=percent(possTotal.home,possTotal.away);$("awayPct").textContent=percent(possTotal.away,possTotal.home);
+ $("homeTime").textContent=fmt(possTotal.home);$("awayTime").textContent=fmt(possTotal.away);
+ $("p1home").textContent=percent(possParts[0].home,possParts[0].away);$("p1away").textContent=percent(possParts[0].away,possParts[0].home);
+ $("p2home").textContent=period===2?percent(possParts[1].home,possParts[1].away):"—";$("p2away").textContent=period===2?percent(possParts[1].away,possParts[1].home):"—";
+ $("totalhome").textContent=percent(possTotal.home,possTotal.away);$("totalaway").textContent=percent(possTotal.away,possTotal.home);
+ $("report").innerHTML="<b>Resultado:</b> "+goals.home+" - "+goals.away+"<br><b>Posse total:</b> "+percent(possTotal.home,possTotal.away)+" / "+percent(possTotal.away,possTotal.home)+"<br><b>1.ª parte:</b> "+percent(possParts[0].home,possParts[0].away)+" / "+percent(possParts[0].away,possParts[0].home)+"<br><b>2.ª parte:</b> "+(period===2?percent(possParts[1].home,possParts[1].away)+" / "+percent(possParts[1].away,possParts[1].home):"—")+"<br><br><b>Estatísticas — Nossa equipa / Adversário</b><br>"+labels.map((l,i)=>l+": "+count.home[keys[i]]+" / "+count.away[keys[i]]).join("<br>");
+ renderCounts();
+}
+function accumulate(){if(!running||lastMs===null)return;let now=Date.now(),d=(now-lastMs)/1000;if(d<=0)return;game+=d;if(active){possTotal[active]+=d;possParts[period-1][active]+=d}lastMs=now}
+function setPoss(team){
+ accumulate(); if(active===team&&running){update();return}
+ saveHistory();
+ if(!running){running=true;lastMs=Date.now()} active=team;$("status").textContent=team==="home"?"Posse: NOSSA EQUIPA":"Posse: ADVERSÁRIO";update();
+}
+function toggleClock(){
+ if(running){accumulate();saveHistory();running=false;active=null;lastMs=null;$("status").textContent="Cronómetro parado"}
+ else{saveHistory();running=true;lastMs=Date.now();$("status").textContent="Jogo a decorrer"}
+ update();
+}
+function secondHalf(){if(period===2)return;accumulate();saveHistory();running=false;active=null;lastMs=null;period=2;$("status").textContent="2.ª PARTE";update()}
+function addGoal(team){saveHistory();goals[team]++;update()}
+function addStat(team,key){saveHistory();count[team][key]++;update()}
+function undo(){
+ if(!history.length){$("status").textContent="Nada para desfazer";setTimeout(()=>$("status").textContent=running?"Jogo a decorrer":"Cronómetro parado",900);return}
+ let s=history.pop();running=false;active=s.active;game=s.game;period=s.period;goals={...s.goals};possTotal={...s.possTotal};possParts=[{...s.possParts[0]},{...s.possParts[1]}];count={home:{...s.count.home},away:{...s.count.away}};lastMs=null;update();$("status").textContent="↩️ Última ação desfeita";
+}
+function newGame(){if(!confirm("Começar um novo jogo? Todas as estatísticas e o resultado atuais serão apagados."))return;running=false;active=null;lastMs=null;game=0;period=1;goals={home:0,away:0};possTotal={home:0,away:0};possParts=[{home:0,away:0},{home:0,away:0}];count={home:{},away:{}};keys.forEach(k=>{count.home[k]=0;count.away[k]=0});history=[];$("status").textContent="Cronómetro parado";update()}
+function reportText(){let t="ANÁLISE DE JOGO\n\nResultado: "+goals.home+" - "+goals.away+"\n\nPOSSE\n1.ª parte: "+percent(possParts[0].home,possParts[0].away)+" / "+percent(possParts[0].away,possParts[0].home)+"\n2.ª parte: "+(period===2?percent(possParts[1].home,possParts[1].away)+" / "+percent(possParts[1].away,possParts[1].home):"não iniciada")+"\nTotal: "+percent(possTotal.home,possTotal.away)+" / "+percent(possTotal.away,possTotal.home)+"\n\nESTATÍSTICAS (Nossa equipa / Adversário)\n";labels.forEach((l,i)=>t+=l+": "+count.home[keys[i]]+" / "+count.away[keys[i]]+"\n");return t}
+function showReport(){if($("modal")){ $("fullReport").textContent=reportText();$("modal").classList.add('show')}else alert(reportText())}
+function copyReport(){let t=reportText();if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>alert('Relatório copiado!'),()=>alert(t));else alert(t)}
+$("homePoss").onclick=()=>setPoss('home');$("awayPoss").onclick=()=>setPoss('away');$("start").onclick=toggleClock;$("periodBtn").onclick=secondHalf;$("undoBtn").onclick=undo;$("reportBtn").onclick=showReport;$("copyBtn").onclick=copyReport;$("closeReport").onclick=()=>$("modal").classList.remove('show');$("newGameBtn").onclick=newGame;$("homeGoal").onclick=()=>addGoal('home');$("awayGoal").onclick=()=>addGoal('away');$("resetStatsBtn").onclick=()=>{saveHistory();keys.forEach(k=>{count.home[k]=0;count.away[k]=0});update()};
+$("stats").addEventListener('click',e=>{let b=e.target.closest('.statBtn');if(b)addStat(b.dataset.team,b.dataset.stat)});
+update();
+setInterval(()=>{if(running){accumulate();update()}},100);
+})();
+</script></body></html>
